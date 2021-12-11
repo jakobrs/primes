@@ -1,8 +1,6 @@
 use primesieve::PrimesieveIterator;
 
 fn main() {
-    println!("Hello, world!");
-
     let max_q = PrimesieveIterator::new_start_stop(0, 223092870)
         .take_while(|&p| p <= 223092870)
         .enumerate()
