@@ -2,4 +2,5 @@
 members = [
     "primesieve-sys",
     "primesieve",
+    "calculation",
 ]
