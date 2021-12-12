@@ -4,6 +4,8 @@ use primesieve::PrimesieveIterator;
 
 fn main() {
     const DIST: u64 = 223092870;
+    const COEFFICIENT: i64 = 6;
+
     let n_threads = num_cpus::get() as u64;
     let thread_dist = DIST / n_threads + 1;
 
@@ -21,7 +23,7 @@ fn main() {
                     .map(|prime| {
                         let prime = prime as i64;
 
-                        let q = 6 * i - prime + 3;
+                        let q = COEFFICIENT * i - prime + 3;
                         i += 1;
 
                         q
@@ -39,8 +41,8 @@ fn main() {
     for thread in res {
         let (i, mut max_q) = thread.join().unwrap();
 
-        // The threads don't know the number of primes less than `start`, so instead of initialising `i` to `pi(start)`, we just add `6*pi(start)` here.
-        max_q += 6 * acc_i;
+        // The threads don't know the number of primes less than `start`, so instead of initialising `i` to `pi(start)`, we just add `COEFFICIENT*pi(start)` here.
+        max_q += COEFFICIENT * acc_i;
         acc_i += i;
 
         if max_q > total_max_q {
