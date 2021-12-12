@@ -17,7 +17,7 @@ fn main() {
                 let mut i = 0;
 
                 let max_q = PrimesieveIterator::new_start_stop(start, stop)
-                    .take_while(|&p| p < stop)
+                    .take_while(|&p| p <= stop)
                     .map(|prime| {
                         let prime = prime as i64;
 
@@ -39,7 +39,7 @@ fn main() {
     for thread in res {
         let (i, mut max_q) = thread.join().unwrap();
 
-        // The threads don't know the number of primes below `start`, so instead of initialising `i` to `pi(start)`, we just add `6*pi(start)` here.
+        // The threads don't know the number of primes less than `start`, so instead of initialising `i` to `pi(start)`, we just add `6*pi(start)` here.
         max_q += 6 * acc_i;
         acc_i += i;
 
