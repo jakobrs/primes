@@ -3,7 +3,7 @@ use std::time::Instant;
 use primesieve::PrimesieveIterator;
 
 fn main() {
-    const DIST: u64 = 223092870;
+    const DIST: u64 = 223_092_870;
     const COEFFICIENT: i64 = 6;
 
     let n_threads = num_cpus::get() as u64;
