@@ -73,7 +73,7 @@ fn main() {
                     });
                 Iterator::min(iter)
             }));
-            //handles.pop().unwrap().join().unwrap();
+            handles.pop().unwrap().join().unwrap(); // Comment to evaluate in parallel
         }
     }
 

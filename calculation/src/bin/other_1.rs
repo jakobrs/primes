@@ -43,7 +43,8 @@ fn main() {
                     }
                 })
                 .min()
-        }).min();
+        })
+        .min();
 
     println!("Min B: {:?}", iter);
 }
