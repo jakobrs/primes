@@ -1,3 +1,5 @@
+use std::mem::MaybeUninit;
+
 use primesieve_sys as sys;
 
 #[repr(transparent)]
@@ -7,29 +9,35 @@ pub struct PrimesieveIterator {
 
 impl PrimesieveIterator {
     pub fn new() -> Self {
-        let mut it = unsafe { std::mem::zeroed() };
         unsafe {
-            sys::primesieve_init(&mut it);
+            let mut it = MaybeUninit::zeroed();
+            sys::primesieve_init(it.as_mut_ptr());
+            PrimesieveIterator {
+                it: it.assume_init(),
+            }
         }
-        PrimesieveIterator { it }
     }
 
     pub fn new_start(start: u64) -> Self {
-        let mut it = unsafe { std::mem::zeroed() };
         unsafe {
-            sys::primesieve_init(&mut it);
-            sys::primesieve_skipto(&mut it, start, sys::primesieve_get_max_stop())
+            let mut it = MaybeUninit::zeroed();
+            sys::primesieve_init(it.as_mut_ptr());
+            sys::primesieve_skipto(it.as_mut_ptr(), start, sys::primesieve_get_max_stop());
+            PrimesieveIterator {
+                it: it.assume_init(),
+            }
         }
-        PrimesieveIterator { it }
     }
 
     pub fn new_start_stop(start: u64, stop_hint: u64) -> Self {
-        let mut it = unsafe { std::mem::zeroed() };
         unsafe {
-            sys::primesieve_init(&mut it);
-            sys::primesieve_skipto(&mut it, start, stop_hint);
+            let mut it = MaybeUninit::zeroed();
+            sys::primesieve_init(it.as_mut_ptr());
+            sys::primesieve_skipto(it.as_mut_ptr(), start, stop_hint);
+            PrimesieveIterator {
+                it: it.assume_init(),
+            }
         }
-        PrimesieveIterator { it }
     }
 }
 
