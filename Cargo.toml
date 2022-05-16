@@ -6,4 +6,5 @@ members = [
     "primesieve-sys",
     "primesieve",
     "calculation",
+    "t",
 ]
