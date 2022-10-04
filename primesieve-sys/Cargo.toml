@@ -2,7 +2,7 @@
 name = "primesieve-sys"
 version = "0.1.0"
 edition = "2021"
-description = "FFI bindings to primesieve"
+description = "FFI bindings to primesieve 8.0"
 links = "primesieve"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html

@@ -35,14 +35,11 @@ pub enum Type {
 #[allow(non_camel_case_types)]
 pub struct primesieve_iterator {
     i: c_size_t,
-    last_idx: c_size_t,
+    size: c_size_t,
     start: u64,
-    stop: u64,
     stop_hint: u64,
-    dist: u64,
     primes: *mut u64,
-    vector: *mut c_void,
-    primeGenerator: *mut c_void, // Why is this one camelcase when the other fields aren't?
+    memory: *mut c_void,
     is_error: c_int,
 }
 
@@ -89,9 +86,8 @@ extern "C" {
 
 #[inline]
 pub unsafe fn primesieve_next_prime(it: *mut primesieve_iterator) -> u64 {
-    let old_i = (*it).i;
     (*it).i += 1;
-    if old_i == (*it).last_idx {
+    if (*it).i >= (*it).size {
         primesieve_generate_next_primes(it);
     }
     *(*it).primes.add((*it).i)
@@ -99,11 +95,10 @@ pub unsafe fn primesieve_next_prime(it: *mut primesieve_iterator) -> u64 {
 
 #[inline]
 pub unsafe fn primesieve_prev_prime(it: *mut primesieve_iterator) -> u64 {
-    let old_i = (*it).i;
-    (*it).i -= 1;
-    if old_i == 0 {
+    if (*it).i == 0 {
         primesieve_generate_prev_primes(it);
     }
+    (*it).i -= 1;
     *(*it).primes.add((*it).i)
 }
 
