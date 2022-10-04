@@ -5,6 +5,5 @@ lto = true
 members = [
     "primesieve-sys",
     "primesieve",
-    "calculation",
     "t",
 ]
